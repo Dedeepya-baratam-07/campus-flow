@@ -187,7 +187,7 @@ h1, h2, h3, h4, h5, h6 {
 /* --- Right: Hero Panel --- */
 .auth-hero-panel {
     position: relative;
-    background: #b2dada; /* Light teal to blend with robot image */
+    background: transparent; /* Transparent to blend with dark theme */
     display: flex;
     flex-direction: column;
     align-items: center;
