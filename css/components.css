@@ -1,0 +1,102 @@
+/* Cards */
+.card {
+    background: var(--surface-lowest);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-ambient); /* The Layering Principle */
+    border: none; /* No-line Rule */
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    box-shadow: 0 12px 32px -4px rgba(25, 28, 29, 0.08);
+    transform: translateY(-2px);
+}
+
+/* Badges */
+.badge {
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+.badge-warning { background-color: var(--warning-container); color: var(--on-warning-container); }
+.badge-success { background-color: var(--success-container); color: var(--on-success-container); }
+.badge-danger { background-color: var(--danger-container); color: var(--on-danger-container); }
+
+/* Forms */
+.form-group {
+    margin-bottom: 1.25rem;
+    text-align: left;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+.form-control {
+    width: 100%;
+    padding: 0.7rem 0.25rem;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0, 188, 212, 0.3);
+    border-radius: 0;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    transition: all 0.25s;
+    font-family: 'Inter', sans-serif;
+    caret-color: #00bcd4;
+}
+.form-control::placeholder { color: rgba(139, 175, 199, 0.45); }
+.form-control:focus {
+    outline: none;
+    background-color: transparent;
+    border-bottom: 2px solid #00bcd4;
+    box-shadow: 0 4px 12px rgba(0, 188, 212, 0.15);
+}
+.form-control option {
+    background: #0a1520;
+    color: var(--text-primary);
+}
+
+/* Modals */
+.modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(25, 28, 29, 0.4);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.modal.hidden {
+    display: none !important;
+}
+.modal-content {
+    background: var(--surface-lowest);
+    padding: 2.5rem;
+    border-radius: var(--radius-lg);
+    width: 90%;
+    max-width: 540px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 48px -12px rgba(25, 28, 29, 0.15); /* Extra diffused shadow */
+    border: none;
+}
+.modal-header {
+    margin-bottom: 2rem;
+    border-bottom: none; /* No-line rule */
+    padding-bottom: 0.5rem;
+}
+.modal-header h3 {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+}

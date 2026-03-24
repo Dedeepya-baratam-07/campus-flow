@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusFlow - College Support System</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <!-- App Container -->
+    <div id="app">
+        <!-- Auth View -->
+        <div id="auth-view" class="view active">
+            <div class="gaming-wrapper">
+                <div class="gaming-inner">
+
+                    <!-- LEFT: Form Panel -->
+                    <div class="auth-form-panel">
+                        <div class="auth-card">
+                            <div class="auth-header">
+                                <h1 class="welcome-text">
+                                    <span style="--i:1">W</span>
+                                    <span style="--i:2">e</span>
+                                    <span style="--i:3">l</span>
+                                    <span style="--i:4">c</span>
+                                    <span style="--i:5">o</span>
+                                    <span style="--i:6">m</span>
+                                    <span style="--i:7">e</span>
+                                </h1>
+                                <h2>CampusFlow</h2>
+                                <p id="auth-subtitle">Sign in to your account</p>
+                            </div>
+
+                            <!-- Login Form -->
+                            <form id="login-form" onsubmit="app.handleLogin(event)">
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" id="login-email" class="form-control" placeholder="username or email..." required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Simulate Role</label>
+                                    <select id="login-role" class="form-control" required>
+                                        <option value="student">Student</option>
+                                        <option value="lecturer">Lecturer</option>
+                                        <option value="hod">HOD</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
+                                <button type="submit" id="login-submit-btn" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:0.75rem; padding:0.8rem; font-size:0.95rem;">
+                                    <i class="fa-solid fa-right-to-bracket"></i> Submit
+                                </button>
+                                <p style="margin-top:1.25rem; text-align:center; font-size:0.8rem; color:var(--text-secondary);">
+                                    Don't have an account?
+                                    <a href="#" onclick="app.toggleAuthMode('signup')" style="color:var(--primary-color); text-decoration:none; font-weight:600;">Sign up</a>
+                                </p>
+                            </form>
+
+                            <!-- Signup Form -->
+                            <form id="signup-form" class="hidden" onsubmit="app.handleSignup(event)">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" id="signup-name" class="form-control" placeholder="Enter your full name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" id="signup-email" class="form-control" placeholder="username or email..." required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Role</label>
+                                    <select id="signup-role" class="form-control" required>
+                                        <option value="student">Student</option>
+                                        <option value="lecturer">Lecturer</option>
+                                        <option value="hod">HOD</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Create Password</label>
+                                    <input type="password" id="signup-password" class="form-control" placeholder="••••••••" required>
+                                </div>
+                                <button type="submit" id="signup-submit-btn" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:0.75rem; padding:0.8rem; font-size:0.95rem;">
+                                    <i class="fa-solid fa-user-plus"></i> Create Account
+                                </button>
+                                <p style="margin-top:1.25rem; text-align:center; font-size:0.8rem; color:var(--text-secondary);">
+                                    Already have an account?
+                                    <a href="#" onclick="app.toggleAuthMode('login')" style="color:var(--primary-color); text-decoration:none; font-weight:600;">Log in</a>
+                                </p>
+                            </form>
+                        </div>
+
+                        <!-- Footer -->
+                        <p style="margin-top:2rem; text-align:center; font-size:0.7rem; color:rgba(139,175,199,0.4); letter-spacing:0.5px;">
+                            &copy; 2025 CampusFlow &mdash; College Support System
+                        </p>
+                    </div>
+
+                    <!-- RIGHT: Hero Panel -->
+                    <div class="auth-hero-panel">
+                        <div class="hero-bg" style="background-image: url('img/robot_saying_hi.png')"></div>
+                        <span class="hero-badge">&#x1F3AE; Campus Portal</span>
+                        <p class="hero-tagline">Your all-in-one college management hub</p>
+                    </div>
+
+                </div><!-- /.gaming-inner -->
+            </div><!-- /.gaming-wrapper -->
+        </div><!-- /#auth-view -->
+
+        <!-- Dashboard View -->
+        <div id="dashboard-view" class="view hidden">
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <h2><i class="fa-solid fa-graduation-cap"></i> CampusFlow</h2>
+                </div>
+                <nav class="sidebar-nav" id="sidebar-nav">
+                    <!-- Links injected by JS based on role -->
+                </nav>
+            </aside>
+
+            <!-- Main Content Container -->
+            <main class="main-container">
+                <!-- Header -->
+                <header class="top-header">
+                    <div class="header-left">
+                        <button class="menu-toggle" onclick="app.toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                        <h3 id="current-page-title">Dashboard</h3>
+                    </div>
+                    <div class="header-right" style="position: relative;">
+                        <div class="role-badge">
+                            <span id="current-role-display">Role</span>
+                        </div>
+                        <button class="btn-icon" onclick="document.getElementById('notif-dropdown').classList.toggle('hidden')">
+                            <i class="fa-solid fa-bell"></i>
+                        </button>
+                        <!-- Notifications Dropdown -->
+                        <div id="notif-dropdown" class="hidden" style="position: absolute; top: 120%; right: 90px; width: 320px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-md); z-index: 100; text-align: left;">
+                            <div style="padding: 1rem; border-bottom: 1px solid var(--border-color); font-weight: 600; color: var(--text-primary);">Notifications</div>
+                            <div style="padding: 1rem; max-height: 300px; overflow-y: auto;">
+                                <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #F3F4F6;">
+                                    <p style="font-size: 0.875rem; margin-bottom: 0.25rem; color: var(--text-primary);">A new <strong>Urgent Notice</strong> was posted by Admin.</p>
+                                    <small style="color: var(--primary-color);">Just now</small>
+                                </div>
+                                <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #F3F4F6;">
+                                    <p style="font-size: 0.875rem; margin-bottom: 0.25rem; color: var(--text-primary);">Your Doubt was marked as Solved.</p>
+                                    <small style="color: var(--text-secondary);">2 hours ago</small>
+                                </div>
+                                <div>
+                                    <p style="font-size: 0.875rem; margin-bottom: 0.25rem; color: var(--text-primary);">Room 101 was reserved successfully.</p>
+                                    <small style="color: var(--text-secondary);">1 day ago</small>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline btn-sm" onclick="app.logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+                    </div>
+                </header>
+
+                <!-- Dynamic Page Content -->
+                <div class="content-area" id="content-area">
+                    <!-- Views will be injected here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/store.js"></script>
+    <script src="js/modules/doubts.js"></script>
+    <script src="js/modules/complaints.js"></script>
+    <script src="js/modules/notices.js"></script>
+    <script src="js/modules/classrooms.js"></script>
+    <script src="js/modules/misc.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
