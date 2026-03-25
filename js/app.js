@@ -80,7 +80,8 @@ const App = {
             <a class="nav-item ${this.state.currentView === link.id ? 'active' : ''}" 
                onclick="app.loadView('${link.id}', '${link.label}')"
                id="nav-${link.id}">
-                <i class="fa-solid ${link.icon}"></i> ${link.label}
+                <span class="nav-text">${link.label}</span>
+                <div class="nav-icon"><i class="fa-solid ${link.icon}"></i></div>
             </a>
         `).join('');
     },

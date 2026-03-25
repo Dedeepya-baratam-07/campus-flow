@@ -125,6 +125,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-left: 220px; /* Make space for landing-sidebar */
     background:
         radial-gradient(ellipse at 20% 50%, rgba(0, 100, 130, 0.35) 0%, transparent 60%),
         radial-gradient(ellipse at 80% 20%, rgba(233, 30, 140, 0.15) 0%, transparent 50%),
@@ -205,15 +206,12 @@ h1, h2, h3, h4, h5, h6 {
     background-position: center;
     background-repeat: no-repeat;
     z-index: 0;
-    mix-blend-mode: luminosity; /* Blends any baked-in light background seamlessly into the dark theme */
-    opacity: 0.9;
-    animation: gentleGreeting 6s ease-in-out infinite alternate;
+    animation: gentleFloat 6s ease-in-out infinite alternate;
 }
 
-@keyframes gentleGreeting {
-    0% { transform: scale(0.98) translateY(2%); filter: brightness(0.9); }
-    50% { transform: scale(1.02) translateY(0%); filter: brightness(1.1); }
-    100% { transform: scale(1.05) translateY(-3%); filter: brightness(1.2); }
+@keyframes gentleFloat {
+    0% { transform: scale(1) translateY(0); }
+    100% { transform: scale(1.03) translateY(-3%); }
 }
 
 .auth-hero-panel::before {
@@ -318,56 +316,119 @@ h1, h2, h3, h4, h5, h6 {
     background-color: var(--surface);
 }
 
-/* Sidebar */
+/* Creative Protruding Sidebar */
 .sidebar {
-    width: var(--sidebar-width);
-    background-color: var(--surface-low); /* Strict Tonal Nesting */
-    border-right: none; /* No-line Rule */
+    width: 220px;
+    background-color: #2b3441; /* Dark grayish-blue from the design */
+    border-right: none;
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease;
+    overflow: visible; /* CRITICAL for protruding icons */
+}
+
+/* Landing specific */
+.landing-sidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
 }
 
 .sidebar-header {
-    height: var(--header-height);
+    height: auto;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 0 2rem;
-    color: var(--primary-color);
+    padding: 2rem 0;
+    margin-bottom: 2rem;
 }
-.sidebar-header h2 { font-size: 1.5rem; }
+
+.sidebar-header-circle {
+    width: 110px;
+    height: 110px;
+    background-color: #f26447; /* Orange from design */
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Orbitron', 'Manrope', sans-serif;
+    border: 5px solid #2b3441;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.sidebar-header-circle h2 {
+    font-size: 1.1rem;
+    color: white;
+    margin: 0;
+    text-shadow: none;
+    letter-spacing: 1px;
+}
+
+.sidebar-header-circle i {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
 
 .sidebar-nav {
     flex: 1;
-    padding: 1.5rem;
-    overflow-y: auto;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1.25rem;
+    overflow-y: visible;
 }
 
 .nav-item {
-    padding: 0.75rem 1rem;
-    border-radius: var(--radius-md);
-    color: var(--text-secondary);
+    position: relative;
+    padding: 0.6rem 0 0.6rem 2rem;
+    color: #f15264; /* Pinkish-red from design */
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    font-weight: 500;
+    justify-content: space-between;
+    font-weight: 700;
     transition: all 0.2s;
     cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
 }
 
-.nav-item:hover {
-    background-color: rgba(25, 28, 29, 0.04);
-    color: var(--text-primary);
+.nav-text {
+    flex-grow: 1;
 }
 
+.nav-item:hover,
 .nav-item.active {
-    background-color: rgba(26, 115, 232, 0.1);
-    color: var(--primary-container);
-    font-weight: 600;
+    color: #f26447; /* Active orange text */
+    background: transparent;
+}
+
+.nav-icon {
+    width: 44px;
+    height: 44px;
+    background-color: #2b3441; /* Matches sidebar */
+    border: 3px solid white; /* Thick white border */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: absolute;
+    right: -22px; /* Protrudes exactly half */
+    font-size: 1.1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
+}
+
+.nav-item:hover .nav-icon,
+.nav-item.active .nav-icon {
+    background-color: #f26447; /* Active orange bg */
+    transform: scale(1.1);
 }
 
 /* Main Container */
@@ -480,6 +541,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Responsiveness */
 @media (max-width: 768px) {
+    #auth-view { padding-left: 0; }
     .menu-toggle { display: block; }
     .sidebar {
         position: absolute;
