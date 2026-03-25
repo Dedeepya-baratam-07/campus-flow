@@ -307,6 +307,12 @@ const App = {
 
     toggleSidebar() {
         document.getElementById('sidebar').classList.toggle('open');
+    },
+
+    mockAction(message) {
+        // Simple mock feedback for demo purposes
+        console.log(`Action: ${message}`);
+        alert(`System: ${message}`);
     }
 };
 

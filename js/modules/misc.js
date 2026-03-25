@@ -11,7 +11,7 @@ const AttendanceModule = {
                 <i class="fa-solid fa-calendar-check" style="font-size: 3rem; color: var(--border-color); margin-bottom: 1rem;"></i>
                 <h3 style="color: var(--text-primary);">No active attendance issues</h3>
                 <p style="color: var(--text-secondary);">Your attendance is up to date.</p>
-                <button class="btn btn-outline" style="margin-top: 1.5rem;">Request Correction</button>
+                <button class="btn btn-outline" style="margin-top: 1.5rem;" onclick="app.mockAction('Attendance Correction Request Sent!')">Request Correction</button>
             </div>
         `;
     }
@@ -25,20 +25,20 @@ const EventsModule = {
                     <h2>Events & Certificates</h2>
                     <p style="color: var(--text-secondary);">Register for college events and download certificates.</p>
                 </div>
-                <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> New Event</button>
+                <button class="btn btn-primary" onclick="app.mockAction('Opening New Event Form...')"><i class="fa-solid fa-plus"></i> New Event</button>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
                 <div class="card">
                     <div style="height: 120px; background: linear-gradient(135deg, #3B82F6, #8B5CF6); border-radius: var(--radius-md); margin-bottom: 1rem;"></div>
                     <h3>Annual Tech Symposium</h3>
                     <p style="color: var(--text-secondary); margin-bottom: 1rem;"><i class="fa-regular fa-calendar"></i> Oct 24, 2026</p>
-                    <button class="btn btn-outline" style="width: 100%; justify-content: center;">Register Now</button>
+                    <button class="btn btn-outline" style="width: 100%; justify-content: center;" onclick="app.mockAction('Registered successfully for Annual Tech Symposium!')">Register Now</button>
                 </div>
                 <div class="card">
                     <div style="height: 120px; background: linear-gradient(135deg, #10B981, #059669); border-radius: var(--radius-md); margin-bottom: 1rem;"></div>
                     <h3>AI Workshop Certificate</h3>
                     <p style="color: var(--text-secondary); margin-bottom: 1rem;"><i class="fa-regular fa-calendar"></i> Attended last month</p>
-                    <button class="btn btn-primary" style="width: 100%; justify-content: center;"><i class="fa-solid fa-download"></i> Download Cert</button>
+                    <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="app.mockAction('Downloading AI Workshop Certificate...')"><i class="fa-solid fa-download"></i> Download Cert</button>
                 </div>
             </div>
         `;
@@ -70,14 +70,14 @@ const LostFoundModule = {
                 <div>
                     <h2>Lost & Found</h2>
                 </div>
-                <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Report Item</button>
+                <button class="btn btn-primary" onclick="app.mockAction('Opening Report Item Modal...')"><i class="fa-solid fa-plus"></i> Report Item</button>
             </div>
             <div class="card flex items-center justify-between" style="margin-bottom: 1rem; border-left: 4px solid var(--warning-color);">
                 <div>
                     <h3 style="color: var(--text-primary); margin-bottom: 0.25rem;">Lost: Blue Water Bottle</h3>
                     <p style="color: var(--text-secondary);">Left in Room 102 near the back benches.</p>
                 </div>
-                <button class="btn btn-outline btn-sm">Contact Finder</button>
+                <button class="btn btn-outline btn-sm" onclick="app.mockAction('Contacting the finder...')">Contact Finder</button>
             </div>
             <div class="card flex items-center justify-between" style="border-left: 4px solid var(--secondary-color);">
                 <div>
