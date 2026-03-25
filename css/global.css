@@ -535,15 +535,15 @@ h6 {
 }
 
 .role-badge {
-    background-color: rgba(233, 30, 140, 0.1);
-    /* Subtle pink tinted background */
-    color: #ffffff;
-    border: 1px solid rgba(233, 30, 140, 0.3);
-    padding: 0.35rem 0.875rem;
+    background-color: transparent;
+    color: var(--text-secondary); /* Pink text matching the logout button */
+    border: 1px solid var(--border-color); /* Subtle pink-tinted border */
+    padding: 0.35rem 1rem;
     border-radius: 9999px;
     font-size: 0.875rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: capitalize;
+    letter-spacing: 0.5px;
 }
 
 .header-right {
