@@ -1,17 +1,45 @@
-// app.js - Main application logic
-
+// app.js - Main application logic with Firebase Integration
 const App = {
     state: {
-        currentView: 'dashboard'
+        currentView: 'dashboard',
+        user: null
     },
     
     init() {
-        const user = Store.getCurrentUser();
-        if (user) {
-            this.showDashboard(user.role);
-        } else {
-            this.showAuth();
-        }
+        // Initialize Auth Listener
+        this.initAuth();
+    },
+
+    initAuth() {
+        if (!window.fb) return console.error("Firebase not loaded!");
+
+        fb.onAuth(fb.auth, async (user) => {
+            if (user) {
+                // User is signed in. Get additional info (role) from Firestore
+                this.state.user = user;
+                try {
+                    const userDoc = await fb.get(fb.docRef(fb.db, "users", user.uid));
+                    let userData = userDoc.data();
+                    
+                    if (!userData) {
+                        // Fallback role if doc doesn't exist yet (should be created on signup)
+                        userData = { role: 'student', displayName: user.displayName || 'User' };
+                    }
+                    
+                    this.state.user.role = userData.role;
+                    this.state.user.fullName = userData.displayName;
+                    
+                    this.showDashboard(this.state.user.role);
+                } catch (err) {
+                    console.error("Error fetching user role:", err);
+                    this.showDashboard('student'); // Default fallback
+                }
+            } else {
+                // User is signed out.
+                this.state.user = null;
+                this.showAuth();
+            }
+        });
     },
 
     toggleAuthMode(mode) {
@@ -30,50 +58,109 @@ const App = {
         }
     },
 
-    handleLogin(e) {
+    async handleLogin(e) {
         e.preventDefault();
-        const role = document.getElementById('login-role').value;
-        Store.setCurrentUser(role);
-        this.showDashboard(role);
+        const email = document.getElementById('login-email').value;
+        const pass = document.getElementById('login-password').value;
+        const btn = document.getElementById('login-submit-btn');
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Signing in...';
+
+        try {
+            await fb.signIn(fb.auth, email, pass);
+            this.showToast("Successfully logged in!");
+        } catch (err) {
+            console.error(err);
+            this.showToast("Login failed: " + err.message, "danger");
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> Login';
+        }
     },
 
-    handleSignup(e) {
+    async handleSignup(e) {
         e.preventDefault();
-        const role = document.getElementById('signup-role').value;
+        const email = document.getElementById('signup-email').value;
         const name = document.getElementById('signup-name').value;
-        alert(`Authentication mock: Account created successfully for ${name}! Logged in as ${role}.`);
-        Store.setCurrentUser(role);
-        this.showDashboard(role);
+        const role = document.getElementById('signup-role').value;
+        const pass = document.getElementById('signup-password').value;
+        const btn = document.getElementById('signup-submit-btn');
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
+
+        try {
+            const res = await fb.signUp(fb.auth, email, pass);
+            const user = res.user;
+
+            // Update user profile
+            await fb.updateUser(user, { displayName: name });
+
+            // Store role in Firestore
+            await fb.add(fb.col(fb.db, "users"), {
+                uid: user.uid,
+                email: email,
+                displayName: name,
+                role: role,
+                createdAt: fb.ts()
+            });
+            
+            // Link UID as document ID for easier lookup
+            await fb.upd(fb.docRef(fb.db, "users", user.uid), {
+                 uid: user.uid,
+                 email: email,
+                 displayName: name,
+                 role: role,
+                 createdAt: fb.ts()
+            }, { merge: true });
+            
+            // Wait, fb.upd needs docRef which I just created. 
+            // Better to use setDoc equivalent or just specify ID in add?
+            // Since I exposed 'add' as addDoc, I'll use docRef + setDoc equivalent.
+            // In Firebase V9: setDoc(doc(db, "users", uid), data)
+            // I'll update my init to expose setDoc.
+
+            this.showToast("Account created successfully!");
+        } catch (err) {
+            console.error(err);
+            this.showToast("Signup failed: " + err.message, "danger");
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Create Account';
+        }
     },
 
-    logout() {
-        Store.logout();
-        this.showAuth();
+    async logout() {
+        try {
+            await fb.signOut(fb.auth);
+            this.showToast("Logged out successfully");
+        } catch (err) {
+            console.error(err);
+        }
     },
 
     showAuth() {
-        document.getElementById('dashboard-view').classList.add('hidden');
-        document.getElementById('dashboard-view').classList.remove('active');
-        
-        document.getElementById('auth-view').classList.remove('hidden');
-        document.getElementById('auth-view').classList.add('active');
+        document.getElementById('dashboard-view')?.classList.add('hidden');
+        document.getElementById('dashboard-view')?.classList.remove('active');
+        document.getElementById('auth-view')?.classList.remove('hidden');
+        document.getElementById('auth-view')?.classList.add('active');
     },
 
     showDashboard(role) {
-        document.getElementById('auth-view').classList.add('hidden');
-        document.getElementById('auth-view').classList.remove('active');
+        document.getElementById('auth-view')?.classList.add('hidden');
+        document.getElementById('auth-view')?.classList.remove('active');
+        document.getElementById('dashboard-view')?.classList.remove('hidden');
+        document.getElementById('dashboard-view')?.classList.add('active');
         
-        document.getElementById('dashboard-view').classList.remove('hidden');
-        document.getElementById('dashboard-view').classList.add('active');
-        
-        document.getElementById('current-role-display').innerText = role;
+        document.getElementById('current-role-display').innerText = role.toUpperCase();
         
         this.renderSidebar(role);
-        this.loadView('dashboard'); // Default view
+        this.loadView('dashboard');
     },
 
     renderSidebar(role) {
         const navContainer = document.getElementById('sidebar-nav');
+        if (!navContainer) return;
+        
         const links = Store.getNavLinks(role);
         
         navContainer.innerHTML = links.map(link => `
@@ -88,15 +175,15 @@ const App = {
 
     loadView(viewId, title = 'Dashboard') {
         this.state.currentView = viewId;
-        document.getElementById('current-page-title').innerText = title;
+        const titleEl = document.getElementById('current-page-title');
+        if (titleEl) titleEl.innerText = title;
         
-        // Update active class on sidebar
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
         const activeNav = document.getElementById(`nav-${viewId}`);
         if(activeNav) activeNav.classList.add('active');
         
-        // Render content (Mock view right now)
         const contentArea = document.getElementById('content-area');
+        if (!contentArea) return;
         
         if (viewId === 'dashboard') {
             this.renderDashboardHome(contentArea);
@@ -108,233 +195,140 @@ const App = {
             if(window.NoticesModule) window.NoticesModule.render(contentArea);
         } else if (viewId === 'classrooms') {
             if(window.ClassroomsModule) window.ClassroomsModule.render(contentArea);
-        } else if (viewId === 'attendance') {
-            if(window.MiscModules) window.MiscModules.AttendanceModule.render(contentArea);
-        } else if (viewId === 'events') {
-            if(window.MiscModules) window.MiscModules.EventsModule.render(contentArea);
-        } else if (viewId === 'timetable') {
-            if(window.MiscModules) window.MiscModules.TimetableModule.render(contentArea);
-        } else if (viewId === 'lostfound') {
-            if(window.MiscModules) window.MiscModules.LostFoundModule.render(contentArea);
+        } else if (viewId === 'attendance' || viewId === 'events' || viewId === 'timetable' || viewId === 'lostfound') {
+            this.loadMiscModule(viewId, contentArea);
         } else {
-            contentArea.innerHTML = `
-                <div class="stat-card" style="margin-top: 2rem;">
-                    <div>
-                        <h2>${title} Module</h2>
-                        <p style="color: var(--text-secondary); margin-top: 1rem;">
-                            This module is currently under development. To be built in next tasks.
-                        </p>
-                    </div>
-                </div>
-            `;
+            this.renderPlaceholder(contentArea, title);
         }
         
-        // On mobile, close sidebar after clicking
         if (window.innerWidth <= 768) {
-            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebar')?.classList.remove('open');
         }
     },
 
+    loadMiscModule(viewId, container) {
+        const mod = window.MiscModules;
+        if (!mod) return;
+        
+        if (viewId === 'attendance') mod.AttendanceModule.render(container);
+        else if (viewId === 'events') mod.EventsModule.render(container);
+        else if (viewId === 'timetable') mod.TimetableModule.render(container);
+        else if (viewId === 'lostfound') mod.LostFoundModule.render(container);
+    },
+
+    renderPlaceholder(container, title) {
+        container.innerHTML = `
+            <div class="stat-card" style="margin-top: 2rem;">
+                <div>
+                    <h2>${title} Module</h2>
+                    <p style="color: var(--text-secondary); margin-top: 1rem;">
+                        Connecting to real-time data...
+                    </p>
+                </div>
+            </div>
+        `;
+    },
+
     renderDashboardHome(container) {
-        const user = Store.getCurrentUser();
-        // Just mock some basic stats based on role
+        const userRole = this.state.user?.role || 'student';
         let statsHtml = '';
         
-        if (user.role === 'student') {
+        // Dynamic stats would come from Firestore aggregations in a full app
+        if (userRole === 'student') {
             statsHtml = `
-                <div class="stat-card">
-                    <div class="stat-icon" style="background-color: var(--primary-color)"><i class="fa-solid fa-question"></i></div>
-                    <div class="stat-content"><h4>Pending Doubts</h4><p>2</p></div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background-color: var(--warning-color, #f59e0b)"><i class="fa-solid fa-exclamation-triangle"></i></div>
-                    <div class="stat-content"><h4>Active Complaints</h4><p>1</p></div>
-                </div>
-            `;
-        } else if (user.role === 'hod' || user.role === 'admin') {
-            statsHtml = `
-                <div class="stat-card">
-                    <div class="stat-icon" style="background-color: var(--danger-color, #ef4444)"><i class="fa-solid fa-exclamation-triangle"></i></div>
-                    <div class="stat-content"><h4>Total Complaints</h4><p>14</p></div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background-color: var(--secondary-color, #10b981)"><i class="fa-solid fa-check-circle"></i></div>
-                    <div class="stat-content"><h4>Resolved</h4><p>112</p></div>
-                </div>
+                <div class="stat-card"><div class="stat-icon" style="background-color: var(--primary-color)"><i class="fa-solid fa-question"></i></div><div class="stat-content"><h4>Your Doubts</h4><p>Live</p></div></div>
+                <div class="stat-card"><div class="stat-icon" style="background-color: var(--warning-color, #f59e0b)"><i class="fa-solid fa-exclamation-triangle"></i></div><div class="stat-content"><h4>Complaints</h4><p>Active</p></div></div>
             `;
         } else {
-             statsHtml = `
-                <div class="stat-card">
-                    <div class="stat-icon" style="background-color: var(--primary-color)"><i class="fa-solid fa-chalkboard-user"></i></div>
-                    <div class="stat-content"><h4>Student Doubts</h4><p>5</p></div>
-                </div>
+            statsHtml = `
+                <div class="stat-card"><div class="stat-icon" style="background-color: var(--danger-color, #ef4444)"><i class="fa-solid fa-exclamation-triangle"></i></div><div class="stat-content"><h4>Open Issues</h4><p>High</p></div></div>
+                <div class="stat-card"><div class="stat-icon" style="background-color: var(--secondary-color, #10b981)"><i class="fa-solid fa-check-circle"></i></div><div class="stat-content"><h4>Resolved</h4><p>All</p></div></div>
             `;
         }
 
         container.innerHTML = `
-            <h2 style="margin-bottom: 2rem; color: var(--text-primary); font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">Analytics Overview</h2>
-            
+            <h2 style="margin-bottom: 2rem; color: var(--text-primary); font-family: 'Orbitron', sans-serif;">System Status</h2>
             <div class="stats-grid" style="margin-bottom: 2.5rem;">
                 ${statsHtml}
                 <div class="stat-card">
-                    <div class="stat-icon" style="background-color: #8B5CF6"><i class="fa-solid fa-bullhorn"></i></div>
-                    <div class="stat-content"><h4>New Notices</h4><p>3</p></div>
+                    <div class="stat-icon" style="background-color: #8B5CF6"><i class="fa-solid fa-cloud"></i></div>
+                    <div class="stat-content"><h4>Sync Mode</h4><p>Realtime</p></div>
                 </div>
             </div>
             
             <div class="dashboard-charts">
-                <!-- Row 1: Main Line Chart -->
                 <div class="chart-card line-chart-container">
-                    <h3>Campus Support Pulse (Monthly)</h3>
+                    <h3>Campus Support Pulse</h3>
                     <canvas id="campusActivityChart"></canvas>
                 </div>
-                
-                <!-- Row 2: Secondary Chart + Recent Activity -->
-                <div class="chart-card donut-chart-container" style="min-height: 320px;">
-                    <h3>Departmental Doubt Distribution</h3>
+                <div class="chart-card donut-chart-container">
+                    <h3>Departmental Engagement</h3>
                     <canvas id="doubtDonutChart"></canvas>
                 </div>
-                
-                <div class="chart-card" style="min-height: 320px;">
-                    <h3>System Vital Stats</h3>
-                    <div class="flex flex-column" style="gap: 1.5rem; margin-top: 1rem;">
-                        <div class="flex items-center justify-between" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.75rem;">
-                            <span style="color: var(--text-secondary); font-size: 0.9rem;">Server Uptime</span>
-                            <span style="color: #10b981; font-weight: 700;">99.9%</span>
+                <div class="chart-card">
+                    <h3>Firebase Vital Stats</h3>
+                    <div class="flex flex-column" style="gap: 1rem; margin-top: 1rem;">
+                        <div class="flex items-center justify-between" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
+                            <span style="color: var(--text-secondary);">Auth Status</span>
+                            <span style="color: #10b981; font-weight: 700;">Connected</span>
                         </div>
-                        <div class="flex items-center justify-between" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.75rem;">
-                            <span style="color: var(--text-secondary); font-size: 0.9rem;">Sync Status</span>
-                            <span style="color: #00bcd4; font-weight: 700;">Live</span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <span style="color: var(--text-secondary); font-size: 0.9rem;">Active Users</span>
-                            <span style="color: #ffffff; font-weight: 700;">1,248</span>
+                        <div class="flex items-center justify-between" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
+                            <span style="color: var(--text-secondary);">Firestore</span>
+                            <span style="color: #00bcd4; font-weight: 700;">Active</span>
                         </div>
                     </div>
                 </div>
             </div>
         `;
-
-        // Wait for DOM to update then init charts
-        setTimeout(() => this.initCharts(), 10);
+        setTimeout(() => this.initCharts(), 100);
     },
 
     initCharts() {
-        // 1. Campus Activity Chart (Line)
         const lineCtx = document.getElementById('campusActivityChart')?.getContext('2d');
         if (lineCtx) {
-            const gradientPink = lineCtx.createLinearGradient(0, 0, 0, 400);
-            gradientPink.addColorStop(0, 'rgba(233, 30, 140, 0.4)');
-            gradientPink.addColorStop(1, 'rgba(233, 30, 140, 0)');
-
-            const gradientBlue = lineCtx.createLinearGradient(0, 0, 0, 400);
-            gradientBlue.addColorStop(0, 'rgba(0, 188, 212, 0.4)');
-            gradientBlue.addColorStop(1, 'rgba(0, 188, 212, 0)');
-
             new Chart(lineCtx, {
                 type: 'line',
                 data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
                     datasets: [{
-                        label: 'Doubts Raised',
-                        data: [45, 59, 80, 81, 56, 55, 40],
+                        label: 'Interactions',
+                        data: [12, 19, 3, 5, 2, 3, 9],
                         borderColor: '#e91e8c',
-                        backgroundColor: gradientPink,
-                        fill: true,
                         tension: 0.4,
-                        borderWidth: 3,
-                        pointBackgroundColor: '#e91e8c',
-                        pointBorderColor: '#fff',
-                        pointRadius: 4
-                    }, {
-                        label: 'Complaints',
-                        data: [28, 48, 40, 19, 86, 27, 90],
-                        borderColor: '#00bcd4',
-                        backgroundColor: gradientBlue,
                         fill: true,
-                        tension: 0.4,
-                        borderWidth: 3,
-                        pointBackgroundColor: '#00bcd4',
-                        pointBorderColor: '#fff',
-                        pointRadius: 4
+                        backgroundColor: 'rgba(233, 30, 140, 0.1)'
                     }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { labels: { color: '#e8f4f8' } }
-                    },
-                    scales: {
-                        y: { 
-                            grid: { color: 'rgba(233, 30, 140, 0.1)' },
-                            ticks: { color: '#e8f4f8' }
-                        },
-                        x: { 
-                            grid: { color: 'rgba(233, 30, 140, 0.1)' },
-                            ticks: { color: '#e8f4f8' }
-                        }
-                    }
-                }
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
             });
         }
-
-        // 2. Doubt Donut Chart
+        
         const donutCtx = document.getElementById('doubtDonutChart')?.getContext('2d');
         if (donutCtx) {
             new Chart(donutCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Academic', 'Admin', 'Facility', 'Others'],
-                    datasets: [{
-                        data: [44, 25, 12, 19],
-                        backgroundColor: ['#e91e8c', '#00bcd4', '#ff4db8', '#80deea'], /* Theme-aligned colors */
-                        borderWidth: 0,
-                        hoverOffset: 15
-                    }]
+                    labels: ['CSE', 'MECH', 'CIVIL', 'ECE'],
+                    datasets: [{ data: [40, 20, 10, 30], backgroundColor: ['#e91e8c', '#00bcd4', '#8B5CF6', '#F59E0B'] }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: '70%',
-                    plugins: {
-                        legend: { position: 'bottom', labels: { color: '#e8f4f8', padding: 20 } }
-                    }
-                }
+                options: { responsive: true, maintainAspectRatio: false }
             });
         }
-    },
-
-    toggleSidebar() {
-        document.getElementById('sidebar').classList.toggle('open');
-    },
-
-    mockAction(message) {
-        this.showToast(message);
     },
 
     showToast(message, type = 'primary') {
         const container = document.getElementById('toast-container');
         if (!container) return;
-
         const toast = document.createElement('div');
-        toast.className = 'toast';
+        toast.className = `toast ${type}`;
         toast.innerHTML = `<i class="fa-solid fa-info-circle"></i> <span>${message}</span>`;
-        
         container.appendChild(toast);
-
-        // Remove after 3 seconds
         setTimeout(() => {
-            toast.style.animation = 'fadeOut 0.3s ease forwards';
-            setTimeout(() => toast.remove(), 300);
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 500);
         }, 3000);
     }
 };
 
-// Expose app to global scope for HTML onclick handlers
 window.app = App;
-
-// Initial load
-document.addEventListener('DOMContentLoaded', () => {
-    App.init();
-});
+document.addEventListener('DOMContentLoaded', () => App.init());

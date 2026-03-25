@@ -1,10 +1,27 @@
 // firebase-init.js - Initialize Firebase with user provided configuration
-// Using ESM import strategy to align with user snippet
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
-// Add other products you need here (firestore, auth, etc.)
-// import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { 
+    getAuth, 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword, 
+    signOut, 
+    onAuthStateChanged,
+    updateProfile
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { 
+    getFirestore, 
+    collection, 
+    addDoc, 
+    getDocs, 
+    query, 
+    where, 
+    orderBy,
+    onSnapshot,
+    serverTimestamp,
+    doc,
+    updateDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA6mUjxRSwvLBB0phlj1UeHE4Z1L022D00",
@@ -16,12 +33,31 @@ const firebaseConfig = {
   measurementId: "G-QKXYL0PTB6"
 };
 
-// Initialize Firebase
+// Initialize
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-// Expose to global scope so existing js/app.js can potentially use them
-window.firebaseApp = app;
-window.firebaseAnalytics = analytics;
+// Expose internal functions to window for use in non-module scripts
+window.fb = {
+    app, auth, db,
+    // Auth
+    signIn: signInWithEmailAndPassword,
+    signUp: createUserWithEmailAndPassword,
+    signOut: signOut,
+    onAuth: onAuthStateChanged,
+    updateUser: updateProfile,
+    // Firestore
+    col: collection,
+    add: addDoc,
+    get: getDocs,
+    qry: query,
+    whr: where,
+    ord: orderBy,
+    snap: onSnapshot,
+    ts: serverTimestamp,
+    docRef: doc,
+    upd: updateDoc
+};
 
-console.log("🔥 Firebase initialized successfully!");
+console.log("🔥 Firebase: Tools loaded and ready!");
