@@ -125,11 +125,8 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-left: 220px; /* Make space for landing-sidebar */
-    background:
-        radial-gradient(ellipse at 20% 50%, rgba(0, 100, 130, 0.35) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(233, 30, 140, 0.15) 0%, transparent 50%),
-        linear-gradient(160deg, #061523 0%, #0a1e30 40%, #0d1b2a 100%);
+    padding-left: 280px; /* More space for sidebar in landing */
+    background: #add8e6; /* Light blue background as seen in the image */
     position: relative;
     overflow: hidden;
 }
@@ -316,21 +313,20 @@ h1, h2, h3, h4, h5, h6 {
     background-color: var(--surface);
 }
 
-/* Creative Protruding Sidebar */
+/* Creative Protruding Sidebar Refinement */
 .sidebar {
-    width: 220px;
-    background-color: var(--surface-low); /* Matches theme */
+    width: 200px; /* Slightly narrower to match image proportions */
+    background-color: #2c343f; /* Darker charcoal from image */
     border-right: none;
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease;
-    overflow: visible; /* CRITICAL for protruding icons */
+    overflow: visible;
 }
 
-/* Landing specific */
 .landing-sidebar {
     position: absolute;
-    left: 0;
+    left: 40px; /* Offset from screen edge as in image */
     top: 0;
     bottom: 0;
     z-index: 10;
@@ -341,37 +337,38 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem 0;
-    margin-bottom: 2rem;
+    padding: 0;
+    margin-top: -30px; /* Protrudes out of top */
+    margin-bottom: 4rem;
 }
 
 .sidebar-header-circle {
-    width: 110px;
-    height: 110px;
-    background: linear-gradient(135deg, rgba(0, 188, 212, 0.15), rgba(233, 30, 140, 0.15));
+    width: 140px;
+    height: 140px;
+    background-color: #f15264; /* Pinkish-red from design */
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: var(--primary-color);
-    font-family: 'Orbitron', 'Manrope', sans-serif;
-    border: 3px solid var(--border-color);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(0, 188, 212, 0.2);
+    color: white;
+    font-family: 'Lobster', 'Manrope', cursive, sans-serif; /* Cursive font for "Creative" */
+    border: 15px solid #add8e6; /* Thick border matching background */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .sidebar-header-circle h2 {
-    font-size: 1.1rem;
-    color: var(--text-primary);
+    font-size: 1.5rem;
+    color: white;
     margin: 0;
     text-shadow: none;
-    letter-spacing: 1px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 400;
 }
 
 .sidebar-header-circle i {
-    font-size: 1.5rem;
-    margin-bottom: 0.25rem;
-    color: #00bcd4;
+    display: none; /* Removed for purity to image */
 }
 
 .sidebar-nav {
@@ -379,24 +376,38 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.5rem;
     overflow-y: visible;
 }
 
 .nav-item {
     position: relative;
-    padding: 0.6rem 0 0.6rem 2rem;
-    color: var(--text-secondary);
+    padding: 0.8rem 0 0.8rem 1.5rem;
+    color: #f15264; /* Pinkish text color from image */
     text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: all 0.2s;
     cursor: pointer;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     letter-spacing: 1px;
     text-transform: uppercase;
+}
+
+/* The circular cutout around the protruding icon */
+.nav-item::after {
+    content: '';
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    background-color: #add8e6; /* Matches background for cutout effect */
+    border-radius: 50%;
+    z-index: 1;
 }
 
 .nav-text {
@@ -405,35 +416,29 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-item:hover,
 .nav-item.active {
-    color: var(--text-primary);
+    color: #f15264;
     background: transparent;
 }
 
 .nav-icon {
-    width: 44px;
-    height: 44px;
-    background-color: var(--surface-low);
-    border: 2px solid var(--border-color);
+    width: 48px;
+    height: 48px;
+    background-color: #2c343f; /* Dark background for icons */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-secondary);
+    color: #ffffff;
     position: absolute;
-    right: -22px; /* Protrudes exactly half */
-    font-size: 1.1rem;
+    right: -24px; /* Protrudes */
+    font-size: 1rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 2;
-    box-shadow: -5px 0 10px rgba(0,0,0,0.2);
+    z-index: 2; /* Sits above the cutout */
 }
 
-.nav-item:hover .nav-icon,
 .nav-item.active .nav-icon {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-container));
-    border-color: transparent;
-    color: white;
-    transform: scale(1.15);
-    box-shadow: 0 0 20px rgba(233, 30, 140, 0.4);
+    background-color: #f15264; /* Active orange/pink as in image */
+    color: #ffffff;
 }
 
 /* Main Container */
