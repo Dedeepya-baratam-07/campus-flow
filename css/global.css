@@ -502,15 +502,14 @@ h6 {
 /* Header */
 .top-header {
     height: var(--header-height);
-    background-color: #ffffff;
-    /* Solid white background instead of translucent */
-    border-bottom: 1px solid rgba(0, 51, 102, 0.1);
+    background-color: var(--surface-low); /* Matching the dark theme of the entire page */
+    border-bottom: 1px solid rgba(233, 30, 140, 0.15); /* Subtle pink border for neat separation */
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 2rem;
     z-index: 10;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Added subtle shadow for contrast on white */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .header-left {
@@ -521,7 +520,9 @@ h6 {
 
 .header-left h3 {
     font-size: 1.25rem;
-    color: #e91e8c; /* Changed to Pink to match the user's preferred combo */
+    color: var(--text-secondary); /* Back to the theme's signature pink */
+    font-family: 'Orbitron', 'Manrope', sans-serif;
+    letter-spacing: 0.5px;
 }
 
 .menu-toggle {
@@ -529,22 +530,20 @@ h6 {
     background: transparent;
     border: none;
     font-size: 1.25rem;
-    color: #1e3a8a; /* Changed from pink to blue */
+    color: var(--text-secondary);
     cursor: pointer;
 }
 
 .role-badge {
-    background-color: #0d1b2a;
-    /* Dark Navy/Charcoal background from theme */
-    color: #e91e8c;
-    /* Pink text (#var(--primary-color)) */
+    background-color: rgba(233, 30, 140, 0.1);
+    /* Subtle pink tinted background */
+    color: #ffffff;
+    border: 1px solid rgba(233, 30, 140, 0.3);
     padding: 0.35rem 0.875rem;
     border-radius: 9999px;
     font-size: 0.875rem;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: capitalize;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    border: none;
 }
 
 .header-right {
@@ -554,25 +553,21 @@ h6 {
 }
 
 .header-right .btn-icon {
-    color: #1e3a8a; /* Bell icon blue */
+    color: var(--text-secondary);
 }
 
 .header-right .btn-outline {
-    background-color: #0d1b2a;
-    /* Dark Navy/Charcoal background from theme */
-    color: #e91e8c;
-    /* Pink text */
-    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
     padding: 0.5rem 1rem;
-    border-radius: 9999px; /* Pill shape like the badge */
-    font-weight: 700;
-    font-size: 0.875rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-md);
+    font-weight: 600;
 }
 
 .header-right .btn-outline:hover {
-    filter: brightness(1.1);
-    transform: translateY(-1px);
+    background-color: var(--surface-high);
+    color: var(--primary-color);
 }
 
 /* Content Area */
