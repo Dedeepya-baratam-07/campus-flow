@@ -443,11 +443,11 @@ h6 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-weight: 600;
+    font-weight: 800; /* Bold font weight */
     transition: all 0.3s ease;
     cursor: pointer;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
+    font-size: 0.95rem; /* Increased size a lil */
+    letter-spacing: 1.5px;
     text-transform: uppercase;
 }
 
