@@ -319,7 +319,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Creative Protruding Sidebar */
 .sidebar {
     width: 220px;
-    background-color: #2b3441; /* Dark grayish-blue from the design */
+    background-color: var(--surface-low); /* Matches theme */
     border-right: none;
     display: flex;
     flex-direction: column;
@@ -348,21 +348,21 @@ h1, h2, h3, h4, h5, h6 {
 .sidebar-header-circle {
     width: 110px;
     height: 110px;
-    background-color: #f26447; /* Orange from design */
+    background: linear-gradient(135deg, rgba(0, 188, 212, 0.15), rgba(233, 30, 140, 0.15));
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--primary-color);
     font-family: 'Orbitron', 'Manrope', sans-serif;
-    border: 5px solid #2b3441;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    border: 3px solid var(--border-color);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(0, 188, 212, 0.2);
 }
 
 .sidebar-header-circle h2 {
     font-size: 1.1rem;
-    color: white;
+    color: var(--text-primary);
     margin: 0;
     text-shadow: none;
     letter-spacing: 1px;
@@ -371,6 +371,7 @@ h1, h2, h3, h4, h5, h6 {
 .sidebar-header-circle i {
     font-size: 1.5rem;
     margin-bottom: 0.25rem;
+    color: #00bcd4;
 }
 
 .sidebar-nav {
@@ -385,16 +386,16 @@ h1, h2, h3, h4, h5, h6 {
 .nav-item {
     position: relative;
     padding: 0.6rem 0 0.6rem 2rem;
-    color: #f15264; /* Pinkish-red from design */
+    color: var(--text-secondary);
     text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-weight: 700;
-    transition: all 0.2s;
+    font-weight: 600;
+    transition: all 0.3s ease;
     cursor: pointer;
     font-size: 0.85rem;
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
     text-transform: uppercase;
 }
 
@@ -404,31 +405,35 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-item:hover,
 .nav-item.active {
-    color: #f26447; /* Active orange text */
+    color: var(--text-primary);
     background: transparent;
 }
 
 .nav-icon {
     width: 44px;
     height: 44px;
-    background-color: #2b3441; /* Matches sidebar */
-    border: 3px solid white; /* Thick white border */
+    background-color: var(--surface-low);
+    border: 2px solid var(--border-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--text-secondary);
     position: absolute;
     right: -22px; /* Protrudes exactly half */
     font-size: 1.1rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 2;
+    box-shadow: -5px 0 10px rgba(0,0,0,0.2);
 }
 
 .nav-item:hover .nav-icon,
 .nav-item.active .nav-icon {
-    background-color: #f26447; /* Active orange bg */
-    transform: scale(1.1);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-container));
+    border-color: transparent;
+    color: white;
+    transform: scale(1.15);
+    box-shadow: 0 0 20px rgba(233, 30, 140, 0.4);
 }
 
 /* Main Container */
