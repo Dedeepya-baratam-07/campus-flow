@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=Orbitron:wght@700;900&display=swap');
 
 :root {
-    /* CampusFlow Gaming Theme */
-    --primary-color: #e91e8c;
-    --primary-container: #ff4db8;
+    /* CampusFlow Cool Blue Theme */
+    --primary-color: #8eb6cf;
+    --primary-container: #b4d3e6;
 
     /* Dark Gaming Surfaces */
     --surface: #0d1b2a;
@@ -15,18 +15,18 @@
 
     /* Typography */
     --text-primary: #e8f4f8;
-    --text-secondary: #6f0611;
+    --text-secondary: #8eb6cf;
 
     /* Elevation & Glow */
     --shadow-ambient: 0 8px 32px rgba(0, 0, 0, 0.5);
     --shadow-layering: 0 2px 8px rgba(0, 0, 0, 0.3);
-    --glow-pink: 0 0 30px rgba(233, 30, 140, 0.35);
+    --glow-pink: 0 0 30px rgba(142, 182, 207, 0.35);
     --glow-teal: 0 0 20px rgba(0, 188, 212, 0.25);
 
     /* Borders */
-    --border-ghost: rgba(0, 188, 212, 0.18);
-    --border-color: rgba(0, 188, 212, 0.25);
-    --border-accent: rgba(206, 94, 137, 0.5);
+    --border-ghost: rgba(142, 182, 207, 0.18);
+    --border-color: rgba(142, 182, 207, 0.25);
+    --border-accent: rgba(142, 182, 207, 0.5);
 
     --sidebar-width: 280px;
     --header-height: 72px;
@@ -285,7 +285,7 @@ h6 {
     position: relative;
     z-index: 2;
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(219, 184, 201, 0.5);
     text-align: center;
 }
 
@@ -311,7 +311,7 @@ h6 {
     color: var(--primary-color);
     margin-bottom: 0.5rem;
     display: inline-flex;
-    text-shadow: 0 0 15px rgba(244, 143, 177, 0.6);
+    text-shadow: 0 0 15px rgba(205, 146, 165, 0.6);
 }
 
 .welcome-text span {
@@ -373,7 +373,8 @@ h6 {
 /* Creative Protruding Sidebar Refinement */
 .sidebar {
     width: 200px;
-    background-color: #2c343f; /* Literal charcoal gray from image */
+    background-color: #2c343f;
+    /* Literal charcoal gray from image */
     border-right: none;
     display: flex;
     flex-direction: column;
@@ -404,7 +405,7 @@ h6 {
 .sidebar-header-circle {
     width: 140px;
     height: 140px;
-    background-color: #f15264; /* Literal pink from image */
+    background-color: #8eb6cf; /* Unified cool blue */
     border-radius: 50%;
     display: flex;
     flex-direction: column;
@@ -412,8 +413,9 @@ h6 {
     justify-content: center;
     color: white;
     font-family: 'Lobster', 'Manrope', cursive, sans-serif;
-    border: 10px solid #ffffff; /* Normal white border */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 10px solid #ffffff;
+    /* Normal white border */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-header-circle h2 {
@@ -437,7 +439,7 @@ h6 {
 .nav-item {
     position: relative;
     padding: 0.8rem 0 0.8rem 1.5rem;
-    color: #f15264; /* Literal text color from image */
+    color: #8eb6cf; /* Unified cool blue */
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -459,7 +461,8 @@ h6 {
     transform: translateY(-50%);
     width: 80px;
     height: 80px;
-    background-color: #f0f4f8; /* Light neutral background for better pop */
+    background-color: #f0f4f8;
+    /* Light neutral background for better pop */
     border-radius: 50%;
     z-index: 1;
     transition: all 0.3s ease;
@@ -472,14 +475,16 @@ h6 {
 
 .nav-item:hover,
 .nav-item.active {
-    color: #f26447; /* Active orange from image */
+    color: #b4d3e6; /* Lighter shade of cool blue */
 }
 
 .nav-icon {
     width: 52px;
     height: 52px;
-    background-color: #2c343f; /* Matches sidebar bg */
-    border: 3px solid #ffffff; /* Normal white border */
+    background-color: #2c343f;
+    /* Matches sidebar bg */
+    border: 3px solid #ffffff;
+    /* Normal white border */
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -490,16 +495,16 @@ h6 {
     font-size: 1.2rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 3;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .nav-item:hover .nav-icon,
 .nav-item.active .nav-icon {
-    background-color: #f26447; /* Literal active orange from image */
+    background-color: #8eb6cf; /* Unified cool blue */
     border-color: #ffffff;
     color: white;
     transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(244, 143, 177, 0.5);
+    box-shadow: 0 0 20px rgba(142, 182, 207, 0.5);
 }
 
 /* Main Container */
