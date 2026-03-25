@@ -172,8 +172,9 @@ const App = {
         }
 
         container.innerHTML = `
-            <h2 style="margin-bottom: 1.5rem; color: var(--text-primary)">Dashboard OverView</h2>
-            <div class="stats-grid">
+            <h2 style="margin-bottom: 2rem; color: var(--text-primary); font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">Analytics Overview</h2>
+            
+            <div class="stats-grid" style="margin-bottom: 2.5rem;">
                 ${statsHtml}
                 <div class="stat-card">
                     <div class="stat-icon" style="background-color: #8B5CF6"><i class="fa-solid fa-bullhorn"></i></div>
@@ -182,19 +183,35 @@ const App = {
             </div>
             
             <div class="dashboard-charts">
+                <!-- Row 1: Main Line Chart -->
                 <div class="chart-card line-chart-container">
-                    <h3>Campus Activity (Monthly)</h3>
+                    <h3>Campus Support Pulse (Monthly)</h3>
                     <canvas id="campusActivityChart"></canvas>
                 </div>
-                <div class="chart-card donut-chart-container">
-                    <h3>Doubt Distribution</h3>
+                
+                <!-- Row 2: Secondary Chart + Recent Activity -->
+                <div class="chart-card donut-chart-container" style="min-height: 320px;">
+                    <h3>Departmental Doubt Distribution</h3>
                     <canvas id="doubtDonutChart"></canvas>
                 </div>
-            </div>
-            
-            <div class="stat-card" style="margin-top: 2rem;">
-                <h3>Recent Activity</h3>
-                <p style="color: var(--text-secondary); margin-top: 1rem;">No recent activity to show.</p>
+                
+                <div class="chart-card" style="min-height: 320px;">
+                    <h3>System Vital Stats</h3>
+                    <div class="flex flex-column" style="gap: 1.5rem; margin-top: 1rem;">
+                        <div class="flex items-center justify-between" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.75rem;">
+                            <span style="color: var(--text-secondary); font-size: 0.9rem;">Server Uptime</span>
+                            <span style="color: #10b981; font-weight: 700;">99.9%</span>
+                        </div>
+                        <div class="flex items-center justify-between" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.75rem;">
+                            <span style="color: var(--text-secondary); font-size: 0.9rem;">Sync Status</span>
+                            <span style="color: #00bcd4; font-weight: 700;">Live</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span style="color: var(--text-secondary); font-size: 0.9rem;">Active Users</span>
+                            <span style="color: #ffffff; font-weight: 700;">1,248</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         `;
 
