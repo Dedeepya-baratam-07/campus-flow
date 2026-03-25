@@ -502,15 +502,15 @@ h6 {
 /* Header */
 .top-header {
     height: var(--header-height);
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    /* Glassmorphism */
-    border-bottom: none;
+    background-color: #ffffff;
+    /* Solid white background instead of translucent */
+    border-bottom: 1px solid rgba(0, 51, 102, 0.1);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 2rem;
     z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Added subtle shadow for contrast on white */
 }
 
 .header-left {
@@ -529,7 +529,7 @@ h6 {
     background: transparent;
     border: none;
     font-size: 1.25rem;
-    color: var(--text-secondary);
+    color: #1e3a8a; /* Changed from pink to blue */
     cursor: pointer;
 }
 
@@ -550,6 +550,20 @@ h6 {
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+.header-right .btn-icon {
+    color: #1e3a8a; /* Bell icon blue */
+}
+
+.header-right .btn-outline {
+    color: #1e3a8a; /* Logout text blue */
+    border: 1px solid rgba(30, 58, 138, 0.2);
+    border-radius: 6px;
+}
+
+.header-right .btn-outline:hover {
+    background-color: rgba(30, 58, 138, 0.05);
 }
 
 /* Content Area */
@@ -591,6 +605,7 @@ h6 {
     color: white;
 }
 
+/* stat-content h4 */
 .stat-content h4 {
     color: var(--text-secondary);
     font-size: 0.875rem;
