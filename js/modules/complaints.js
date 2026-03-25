@@ -88,7 +88,7 @@ const ComplaintsModule = {
             </tbody>
         </table>
         <style>
-            .table-row-hover:hover { background-color: #F9FAFB; }
+            .table-row-hover:hover { background-color: rgba(255, 255, 255, 0.03); }
         </style>
         `;
     },
