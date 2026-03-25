@@ -451,22 +451,6 @@ h6 {
     text-transform: uppercase;
 }
 
-/* The circular cutout around the protruding icon - back to neutral/white to pop */
-.nav-item::after {
-    content: '';
-    position: absolute;
-    right: -40px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 80px;
-    height: 80px;
-    background-color: #f0f4f8;
-    /* Light neutral background for better pop */
-    border-radius: 50%;
-    z-index: 1;
-    transition: all 0.3s ease;
-}
-
 .nav-text {
     flex-grow: 1;
     z-index: 2;
