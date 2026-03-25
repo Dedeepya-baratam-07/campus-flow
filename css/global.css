@@ -322,13 +322,14 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     transition: transform 0.3s ease;
     overflow: visible;
-    margin-top: 40px; /* Space from top */
-    border-radius: 0 30px 30px 0; /* Rounded edges as seen in some variations */
+    margin-top: 100px; /* Moves sidebar down relative to the top edge */
+    border-radius: 0 30px 30px 0;
+    position: relative;
 }
 
 .landing-sidebar {
     position: absolute;
-    left: 0;
+    left: 40px;
     top: 0;
     bottom: 0;
     z-index: 10;
@@ -340,9 +341,10 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     align-items: center;
     padding: 0;
-    margin-top: -60px; /* Logo center on top edge */
-    margin-bottom: 0;
-    position: relative;
+    position: absolute; /* Floating above the sidebar body */
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 5;
 }
 
@@ -357,22 +359,22 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
     color: white;
     font-family: 'Orbitron', sans-serif;
-    border: 10px solid var(--surface);
+    border: 10px solid var(--surface); /* Border matches background to create gap */
     box-shadow: 0 0 30px rgba(233, 30, 140, 0.3);
 }
 
-/* The Crescent Cutout under the logo as seen in image */
+/* The Curved Top (Concave) for the sidebar body */
 .sidebar::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 100px;
-    background-color: var(--surface); /* Matches bg to create "gap" */
-    border-radius: 0 0 100px 100px;
-    z-index: 1;
+    top: -40px;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background-color: var(--surface-low);
+    /* Create the inward curve (concave) effect */
+    mask-image: radial-gradient(circle at 50% -20px, transparent 60px, black 61px);
+    -webkit-mask-image: radial-gradient(circle at 50% -20px, transparent 60px, black 61px);
 }
 
 .sidebar-header-circle h2 {
@@ -385,7 +387,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .sidebar-nav {
     flex: 1;
-    padding: 4rem 0 2rem 0; /* CRITICAL: Substantial top padding for the gap */
+    padding: 2rem 0 2rem 0; /* Space above the first item */
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
@@ -410,16 +412,16 @@ h1, h2, h3, h4, h5, h6 {
     text-transform: uppercase;
 }
 
-/* The circular cutout around the protruding icon - now matches theme background */
+/* The circular cutout around the protruding icon */
 .nav-item::after {
     content: '';
     position: absolute;
-    right: -40px; /* Moves it out to encircle the icon */
+    right: -40px;
     top: 50%;
     transform: translateY(-50%);
     width: 80px;
     height: 80px;
-    background-color: var(--surface); /* Matches theme background for cutout effect */
+    background-color: var(--surface);
     border-radius: 50%;
     z-index: 1;
     transition: all 0.3s ease;
