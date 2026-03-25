@@ -340,14 +340,16 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     align-items: center;
     padding: 0;
-    margin-top: -60px; /* Protrudes out of top */
-    margin-bottom: 3rem;
+    margin-top: -60px; /* Logo center on top edge */
+    margin-bottom: 0;
+    position: relative;
+    z-index: 5;
 }
 
 .sidebar-header-circle {
     width: 140px;
     height: 140px;
-    background-color: var(--primary-color); /* Neon pink from theme */
+    background-color: var(--primary-color);
     border-radius: 50%;
     display: flex;
     flex-direction: column;
@@ -355,8 +357,22 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
     color: white;
     font-family: 'Orbitron', sans-serif;
-    border: 10px solid var(--surface); /* Thick border matching main background */
+    border: 10px solid var(--surface);
     box-shadow: 0 0 30px rgba(233, 30, 140, 0.3);
+}
+
+/* The Crescent Cutout under the logo as seen in image */
+.sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 100px;
+    background-color: var(--surface); /* Matches bg to create "gap" */
+    border-radius: 0 0 100px 100px;
+    z-index: 1;
 }
 
 .sidebar-header-circle h2 {
@@ -369,11 +385,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .sidebar-nav {
     flex: 1;
-    padding: 0;
+    padding: 4rem 0 2rem 0; /* CRITICAL: Substantial top padding for the gap */
     display: flex;
     flex-direction: column;
-    gap: 2.5rem; /* CRITICAL: Increased gaps between items */
+    gap: 2.5rem;
     overflow-y: visible;
+    position: relative;
+    z-index: 2;
 }
 
 .nav-item {
