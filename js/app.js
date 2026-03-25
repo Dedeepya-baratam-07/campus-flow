@@ -147,18 +147,18 @@ const App = {
                     <div class="stat-content"><h4>Pending Doubts</h4><p>2</p></div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon" style="background-color: var(--warning-color)"><i class="fa-solid fa-exclamation-triangle"></i></div>
+                    <div class="stat-icon" style="background-color: var(--warning-color, #f59e0b)"><i class="fa-solid fa-exclamation-triangle"></i></div>
                     <div class="stat-content"><h4>Active Complaints</h4><p>1</p></div>
                 </div>
             `;
         } else if (user.role === 'hod' || user.role === 'admin') {
             statsHtml = `
                 <div class="stat-card">
-                    <div class="stat-icon" style="background-color: var(--danger-color)"><i class="fa-solid fa-exclamation-triangle"></i></div>
+                    <div class="stat-icon" style="background-color: var(--danger-color, #ef4444)"><i class="fa-solid fa-exclamation-triangle"></i></div>
                     <div class="stat-content"><h4>Total Complaints</h4><p>14</p></div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon" style="background-color: var(--secondary-color)"><i class="fa-solid fa-check-circle"></i></div>
+                    <div class="stat-icon" style="background-color: var(--secondary-color, #10b981)"><i class="fa-solid fa-check-circle"></i></div>
                     <div class="stat-content"><h4>Resolved</h4><p>112</p></div>
                 </div>
             `;
@@ -172,7 +172,7 @@ const App = {
         }
 
         container.innerHTML = `
-            <h2 style="margin-bottom: 1.5rem;">Welcome back, ${user.role}!</h2>
+            <h2 style="margin-bottom: 1.5rem; color: var(--text-primary)">Dashboard OverView</h2>
             <div class="stats-grid">
                 ${statsHtml}
                 <div class="stat-card">
@@ -181,11 +181,111 @@ const App = {
                 </div>
             </div>
             
-            <div class="stat-card">
+            <div class="dashboard-charts">
+                <div class="chart-card line-chart-container">
+                    <h3>Campus Activity (Monthly)</h3>
+                    <canvas id="campusActivityChart"></canvas>
+                </div>
+                <div class="chart-card donut-chart-container">
+                    <h3>Doubt Distribution</h3>
+                    <canvas id="doubtDonutChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="stat-card" style="margin-top: 2rem;">
                 <h3>Recent Activity</h3>
                 <p style="color: var(--text-secondary); margin-top: 1rem;">No recent activity to show.</p>
             </div>
         `;
+
+        // Wait for DOM to update then init charts
+        setTimeout(() => this.initCharts(), 10);
+    },
+
+    initCharts() {
+        // 1. Campus Activity Chart (Line)
+        const lineCtx = document.getElementById('campusActivityChart')?.getContext('2d');
+        if (lineCtx) {
+            const gradientPink = lineCtx.createLinearGradient(0, 0, 0, 400);
+            gradientPink.addColorStop(0, 'rgba(233, 30, 140, 0.4)');
+            gradientPink.addColorStop(1, 'rgba(233, 30, 140, 0)');
+
+            const gradientBlue = lineCtx.createLinearGradient(0, 0, 0, 400);
+            gradientBlue.addColorStop(0, 'rgba(0, 188, 212, 0.4)');
+            gradientBlue.addColorStop(1, 'rgba(0, 188, 212, 0)');
+
+            new Chart(lineCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        label: 'Doubts Raised',
+                        data: [45, 59, 80, 81, 56, 55, 40],
+                        borderColor: '#e91e8c',
+                        backgroundColor: gradientPink,
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#e91e8c',
+                        pointBorderColor: '#fff',
+                        pointRadius: 4
+                    }, {
+                        label: 'Complaints',
+                        data: [28, 48, 40, 19, 86, 27, 90],
+                        borderColor: '#00bcd4',
+                        backgroundColor: gradientBlue,
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#00bcd4',
+                        pointBorderColor: '#fff',
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#e8f4f8' } }
+                    },
+                    scales: {
+                        y: { 
+                            grid: { color: 'rgba(233, 30, 140, 0.1)' },
+                            ticks: { color: '#e8f4f8' }
+                        },
+                        x: { 
+                            grid: { color: 'rgba(233, 30, 140, 0.1)' },
+                            ticks: { color: '#e8f4f8' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 2. Doubt Donut Chart
+        const donutCtx = document.getElementById('doubtDonutChart')?.getContext('2d');
+        if (donutCtx) {
+            new Chart(donutCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Academic', 'Admin', 'Facility', 'Others'],
+                    datasets: [{
+                        data: [44, 25, 12, 19],
+                        backgroundColor: ['#e91e8c', '#00bcd4', '#8B5CF6', '#F59E0B'],
+                        borderWidth: 0,
+                        hoverOffset: 15
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#e8f4f8', padding: 20 } }
+                    }
+                }
+            });
+        }
     },
 
     toggleSidebar() {

@@ -609,6 +609,37 @@ h6 {
     color: white;
 }
 
+/* Dashboard Charts */
+.dashboard-charts {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.chart-card {
+    background: var(--surface-card);
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(233, 30, 140, 0.1);
+    box-shadow: var(--shadow-ambient);
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-card h3 {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+#campusActivityChart, #doubtDonutChart {
+    flex: 1;
+}
+
 /* stat-content h4 */
 .stat-content h4 {
     color: var(--text-secondary);
@@ -648,6 +679,10 @@ h6 {
 
     .content-area {
         padding: 1.5rem;
+    }
+
+    .dashboard-charts {
+        grid-template-columns: 1fr;
     }
 
     /* Gaming login collapses to single column */
