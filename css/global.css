@@ -14,7 +14,7 @@
     --surface-card: rgba(10, 22, 36, 0.85);
 
     /* Typography */
-    --text-primary: #e8f4f8;
+    --text-primary: #ffffff; /* Changed from pale lavender-blue (#e8f4f8) to white */
     --text-secondary: #e91e8c;
 
     /* Elevation & Glow */
@@ -285,7 +285,7 @@ h6 {
     position: relative;
     z-index: 2;
     font-size: 0.8rem;
-    color: rgba(219, 184, 201, 0.5);
+    color: rgba(255, 255, 255, 0.6); /* Changed from mauve to semi-transparent white */
     text-align: center;
 }
 
@@ -521,6 +521,7 @@ h6 {
 
 .header-left h3 {
     font-size: 1.25rem;
+    color: #1e3a8a; /* A vibrant royal blue that suits the white header */
 }
 
 .menu-toggle {
@@ -533,15 +534,16 @@ h6 {
 }
 
 .role-badge {
-    background-color: #d8e2ff;
-    /* primary_fixed */
-    color: #001a41;
-    /* on_primary_fixed */
+    background-color: #ffffff;
+    /* Changed from lavender (#d8e2ff) to white */
+    color: #1e3a8a;
+    /* Changed to match heading blue */
     padding: 0.35rem 0.875rem;
     border-radius: 9999px;
     font-size: 0.875rem;
     font-weight: 600;
     text-transform: capitalize;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle lift */
 }
 
 .header-right {
