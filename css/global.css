@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=Orbitron:wght@700;900&display=swap');
 
 :root {
-    /* CampusFlow Cool Blue Theme */
-    --primary-color: #8eb6cf;
-    --primary-container: #b4d3e6;
+    /* CampusFlow Baby Pink Theme */
+    --primary-color: #f4cfdf;
+    --primary-container: #ffdaeb;
 
     /* Dark Gaming Surfaces */
     --surface: #0d1b2a;
@@ -15,18 +15,18 @@
 
     /* Typography */
     --text-primary: #e8f4f8;
-    --text-secondary: #8eb6cf;
+    --text-secondary: #f4cfdf;
 
     /* Elevation & Glow */
     --shadow-ambient: 0 8px 32px rgba(0, 0, 0, 0.5);
     --shadow-layering: 0 2px 8px rgba(0, 0, 0, 0.3);
-    --glow-pink: 0 0 30px rgba(142, 182, 207, 0.35);
+    --glow-pink: 0 0 30px rgba(244, 207, 223, 0.35);
     --glow-teal: 0 0 20px rgba(0, 188, 212, 0.25);
 
     /* Borders */
-    --border-ghost: rgba(142, 182, 207, 0.18);
-    --border-color: rgba(142, 182, 207, 0.25);
-    --border-accent: rgba(142, 182, 207, 0.5);
+    --border-ghost: rgba(244, 207, 223, 0.18);
+    --border-color: rgba(244, 207, 223, 0.25);
+    --border-accent: rgba(244, 207, 223, 0.5);
 
     --sidebar-width: 280px;
     --header-height: 72px;
@@ -405,13 +405,13 @@ h6 {
 .sidebar-header-circle {
     width: 140px;
     height: 140px;
-    background-color: #8eb6cf; /* Unified cool blue */
+    background-color: #f4cfdf; /* Unified baby pink */
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: #4a4a4a; /* Darker text for readability on light pink */
     font-family: 'Lobster', 'Manrope', cursive, sans-serif;
     border: 10px solid #ffffff;
     /* Normal white border */
@@ -439,7 +439,7 @@ h6 {
 .nav-item {
     position: relative;
     padding: 0.8rem 0 0.8rem 1.5rem;
-    color: #8eb6cf; /* Unified cool blue */
+    color: #f4cfdf; /* Unified baby pink */
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -475,7 +475,7 @@ h6 {
 
 .nav-item:hover,
 .nav-item.active {
-    color: #b4d3e6; /* Lighter shade of cool blue */
+    color: #ffdaeb; /* Lighter shade of baby pink */
 }
 
 .nav-icon {
@@ -500,11 +500,11 @@ h6 {
 
 .nav-item:hover .nav-icon,
 .nav-item.active .nav-icon {
-    background-color: #8eb6cf; /* Unified cool blue */
+    background-color: #f4cfdf; /* Unified baby pink */
     border-color: #ffffff;
-    color: white;
+    color: #4a4a4a;
     transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(142, 182, 207, 0.5);
+    box-shadow: 0 0 20px rgba(244, 207, 223, 0.5);
 }
 
 /* Main Container */
