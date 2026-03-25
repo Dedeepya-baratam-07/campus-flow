@@ -503,7 +503,7 @@ h6 {
 .top-header {
     height: var(--header-height);
     background-color: var(--surface-low); /* Matching the dark theme of the entire page */
-    border-bottom: 2px solid #1e3a8a; /* Enhanced Royal Blue separation line */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Clean white separation line */
     display: flex;
     align-items: center;
     justify-content: space-between;
