@@ -271,7 +271,7 @@ const App = {
                     labels: ['Academic', 'Admin', 'Facility', 'Others'],
                     datasets: [{
                         data: [44, 25, 12, 19],
-                        backgroundColor: ['#e91e8c', '#00bcd4', '#8B5CF6', '#F59E0B'],
+                        backgroundColor: ['#e91e8c', '#00bcd4', '#ff4db8', '#80deea'], /* Theme-aligned colors */
                         borderWidth: 0,
                         hoverOffset: 15
                     }]
