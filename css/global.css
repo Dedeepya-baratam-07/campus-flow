@@ -534,16 +534,17 @@ h6 {
 }
 
 .role-badge {
-    background-color: #ffffff;
-    /* Changed from lavender (#d8e2ff) to white */
-    color: #1e3a8a;
-    /* Changed to match heading blue */
+    background-color: #1e3a8a;
+    /* Royal Blue background */
+    color: #e91e8c;
+    /* Pink text (#var(--primary-color)) */
     padding: 0.35rem 0.875rem;
     border-radius: 9999px;
     font-size: 0.875rem;
-    font-weight: 600;
+    font-weight: 700; /* Bolder for visibility on blue */
     text-transform: capitalize;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle lift */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border: none;
 }
 
 .header-right {
@@ -557,13 +558,21 @@ h6 {
 }
 
 .header-right .btn-outline {
-    color: #1e3a8a; /* Logout text blue */
-    border: 1px solid rgba(30, 58, 138, 0.2);
-    border-radius: 6px;
+    background-color: #1e3a8a;
+    /* Royal Blue background */
+    color: #e91e8c;
+    /* Pink text */
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px; /* Pill shape like the badge */
+    font-weight: 700;
+    font-size: 0.875rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .header-right .btn-outline:hover {
-    background-color: rgba(30, 58, 138, 0.05);
+    filter: brightness(1.1);
+    transform: translateY(-1px);
 }
 
 /* Content Area */
