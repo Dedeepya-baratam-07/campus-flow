@@ -310,9 +310,24 @@ const App = {
     },
 
     mockAction(message) {
-        // Simple mock feedback for demo purposes
-        console.log(`Action: ${message}`);
-        alert(`System: ${message}`);
+        this.showToast(message);
+    },
+
+    showToast(message, type = 'primary') {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `<i class="fa-solid fa-info-circle"></i> <span>${message}</span>`;
+        
+        container.appendChild(toast);
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+            toast.style.animation = 'fadeOut 0.3s ease forwards';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
     }
 };
 
