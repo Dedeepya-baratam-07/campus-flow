@@ -315,18 +315,20 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Creative Protruding Sidebar Refinement */
 .sidebar {
-    width: 200px; /* Slightly narrower to match image proportions */
-    background-color: #2c343f; /* Darker charcoal from image */
+    width: 200px;
+    background-color: var(--surface-low); /* Matches theme */
     border-right: none;
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease;
     overflow: visible;
+    margin-top: 40px; /* Space from top */
+    border-radius: 0 30px 30px 0; /* Rounded edges as seen in some variations */
 }
 
 .landing-sidebar {
     position: absolute;
-    left: 40px; /* Offset from screen edge as in image */
+    left: 0;
     top: 0;
     bottom: 0;
     z-index: 10;
@@ -338,37 +340,31 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     align-items: center;
     padding: 0;
-    margin-top: -30px; /* Protrudes out of top */
-    margin-bottom: 4rem;
+    margin-top: -60px; /* Protrudes out of top */
+    margin-bottom: 3rem;
 }
 
 .sidebar-header-circle {
     width: 140px;
     height: 140px;
-    background-color: #f15264; /* Pinkish-red from design */
+    background-color: var(--primary-color); /* Neon pink from theme */
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: white;
-    font-family: 'Lobster', 'Manrope', cursive, sans-serif; /* Cursive font for "Creative" */
-    border: 15px solid #add8e6; /* Thick border matching background */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-family: 'Orbitron', sans-serif;
+    border: 10px solid var(--surface); /* Thick border matching main background */
+    box-shadow: 0 0 30px rgba(233, 30, 140, 0.3);
 }
 
 .sidebar-header-circle h2 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: white;
     margin: 0;
-    text-shadow: none;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 400;
-}
-
-.sidebar-header-circle i {
-    display: none; /* Removed for purity to image */
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 .sidebar-nav {
@@ -376,69 +372,76 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2.5rem; /* CRITICAL: Increased gaps between items */
     overflow-y: visible;
 }
 
 .nav-item {
     position: relative;
     padding: 0.8rem 0 0.8rem 1.5rem;
-    color: #f15264; /* Pinkish text color from image */
+    color: var(--text-secondary);
     text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-weight: 600;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
     cursor: pointer;
-    font-size: 0.75rem;
-    letter-spacing: 1px;
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
 }
 
-/* The circular cutout around the protruding icon */
+/* The circular cutout around the protruding icon - now matches theme background */
 .nav-item::after {
     content: '';
     position: absolute;
-    right: -30px;
+    right: -40px; /* Moves it out to encircle the icon */
     top: 50%;
     transform: translateY(-50%);
-    width: 60px;
-    height: 60px;
-    background-color: #add8e6; /* Matches background for cutout effect */
+    width: 80px;
+    height: 80px;
+    background-color: var(--surface); /* Matches theme background for cutout effect */
     border-radius: 50%;
     z-index: 1;
+    transition: all 0.3s ease;
 }
 
 .nav-text {
     flex-grow: 1;
+    z-index: 2;
 }
 
 .nav-item:hover,
 .nav-item.active {
-    color: #f15264;
-    background: transparent;
+    color: var(--primary-color);
 }
 
 .nav-icon {
-    width: 48px;
-    height: 48px;
-    background-color: #2c343f; /* Dark background for icons */
+    width: 52px;
+    height: 52px;
+    background-color: var(--surface-low); /* Matches sidebar bg */
+    border: 2px solid var(--border-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ffffff;
+    color: var(--text-secondary);
     position: absolute;
-    right: -24px; /* Protrudes */
-    font-size: 1rem;
+    right: -26px; /* Protrudes exactly half */
+    font-size: 1.2rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 2; /* Sits above the cutout */
+    z-index: 3; /* Sits above the cutout */
+    box-shadow: -5px 0 15px rgba(0,0,0,0.3);
 }
 
+.nav-item:hover .nav-icon,
 .nav-item.active .nav-icon {
-    background-color: #f15264; /* Active orange/pink as in image */
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-container));
+    border-color: transparent;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(233, 30, 140, 0.5);
 }
 
 /* Main Container */
