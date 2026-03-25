@@ -372,7 +372,7 @@ h6 {
 
 /* Creative Protruding Sidebar Refinement */
 .sidebar {
-    width: 200px;
+    width: 260px; /* Increased from 200px */
     background-color: #2c343f; /* Literal charcoal gray from image */
     border-right: none;
     display: flex;
