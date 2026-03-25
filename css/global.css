@@ -458,9 +458,9 @@ h1, h2, h3, h4, h5, h6 {
 /* Header */
 .top-header {
     height: var(--header-height);
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px); /* Glassmorphism */
-    border-bottom: none;
+    background-color: var(--surface-glass);
+    backdrop-filter: blur(25px); /* Increased glassmorphism blur */
+    border-bottom: 1px solid var(--border-ghost);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -487,13 +487,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .role-badge {
-    background-color: #d8e2ff; /* primary_fixed */
-    color: #001a41; /* on_primary_fixed */
+    background-color: rgba(233, 30, 140, 0.15); /* primary tint */
+    color: var(--primary-color);
+    border: 1px solid var(--border-accent);
     padding: 0.35rem 0.875rem;
     border-radius: 9999px;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    text-transform: capitalize;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .header-right {
