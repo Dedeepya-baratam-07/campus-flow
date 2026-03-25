@@ -1,32 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=Orbitron:wght@700;900&display=swap');
 
 :root {
-    /* CampusFlow Baby Pink Theme */
-    --primary-color: #f4cfdf;
-    --primary-container: #ffdaeb;
+    /* CampusFlow Deep Cool Theme */
+    --primary-color: #4a90e2;
+    --primary-container: #357abd;
 
     /* Dark Gaming Surfaces */
-    --surface: #0d1b2a;
-    --surface-low: #0a1520;
-    --surface-lowest: #0d1b2a;
-    --surface-high: #1a2a3a;
-    --surface-glass: rgba(13, 27, 42, 0.75);
-    --surface-card: rgba(10, 22, 36, 0.85);
+    --surface: #0a0a0a; /* Darker for higher contrast */
+    --surface-low: #121212;
+    --surface-lowest: #0a0a0a;
+    --surface-high: #1e1e1e;
+    --surface-glass: rgba(10, 10, 10, 0.75);
+    --surface-card: rgba(18, 18, 18, 0.85);
 
     /* Typography */
-    --text-primary: #e8f4f8;
-    --text-secondary: #f4cfdf;
+    --text-primary: #e0e0e0;
+    --text-secondary: #4a90e2;
 
     /* Elevation & Glow */
-    --shadow-ambient: 0 8px 32px rgba(0, 0, 0, 0.5);
-    --shadow-layering: 0 2px 8px rgba(0, 0, 0, 0.3);
-    --glow-pink: 0 0 30px rgba(244, 207, 223, 0.35);
+    --shadow-ambient: 0 8px 32px rgba(0, 0, 0, 0.8);
+    --shadow-layering: 0 2px 8px rgba(0, 0, 0, 0.5);
+    --glow-pink: 0 0 30px rgba(74, 144, 226, 0.35);
     --glow-teal: 0 0 20px rgba(0, 188, 212, 0.25);
 
     /* Borders */
-    --border-ghost: rgba(244, 207, 223, 0.18);
-    --border-color: rgba(244, 207, 223, 0.25);
-    --border-accent: rgba(244, 207, 223, 0.5);
+    --border-ghost: rgba(74, 144, 226, 0.18);
+    --border-color: rgba(74, 144, 226, 0.25);
+    --border-accent: rgba(74, 144, 226, 0.5);
 
     --sidebar-width: 280px;
     --header-height: 72px;
@@ -373,8 +373,7 @@ h6 {
 /* Creative Protruding Sidebar Refinement */
 .sidebar {
     width: 200px;
-    background-color: #2c343f;
-    /* Literal charcoal gray from image */
+    background-color: #121212; /* Deeper dark gray/black */
     border-right: none;
     display: flex;
     flex-direction: column;
@@ -405,13 +404,13 @@ h6 {
 .sidebar-header-circle {
     width: 140px;
     height: 140px;
-    background-color: #f4cfdf; /* Unified baby pink */
+    background-color: #4a90e2; /* Deep cool blue */
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #4a4a4a; /* Darker text for readability on light pink */
+    color: white;
     font-family: 'Lobster', 'Manrope', cursive, sans-serif;
     border: 10px solid #ffffff;
     /* Normal white border */
@@ -439,7 +438,7 @@ h6 {
 .nav-item {
     position: relative;
     padding: 0.8rem 0 0.8rem 1.5rem;
-    color: #f4cfdf; /* Unified baby pink */
+    color: #4a90e2; /* Deep cool blue */
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -475,14 +474,13 @@ h6 {
 
 .nav-item:hover,
 .nav-item.active {
-    color: #ffdaeb; /* Lighter shade of baby pink */
+    color: #357abd; /* Lighter shade of indigo/blue */
 }
 
 .nav-icon {
     width: 52px;
     height: 52px;
-    background-color: #2c343f;
-    /* Matches sidebar bg */
+    background-color: #1e1e1e; /* Matches dark sidebar bg */
     border: 3px solid #ffffff;
     /* Normal white border */
     border-radius: 50%;
@@ -500,11 +498,11 @@ h6 {
 
 .nav-item:hover .nav-icon,
 .nav-item.active .nav-icon {
-    background-color: #f4cfdf; /* Unified baby pink */
+    background-color: #4a90e2; /* Deep cool blue */
     border-color: #ffffff;
-    color: #4a4a4a;
+    color: white;
     transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(244, 207, 223, 0.5);
+    box-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
 }
 
 /* Main Container */
