@@ -623,9 +623,10 @@ h6 {
     border-radius: var(--radius-lg);
     border: 1px solid rgba(233, 30, 140, 0.1);
     box-shadow: var(--shadow-ambient);
-    min-height: 260px; /* Reduced from 400px for a smaller, neater look */
+    height: 280px; /* Fixed height to prevent stretching */
     display: flex;
     flex-direction: column;
+    overflow: hidden; /* Keep it neat */
 }
 
 .chart-card h3 {
@@ -638,7 +639,9 @@ h6 {
 }
 
 #campusActivityChart, #doubtDonutChart {
-    flex: 1;
+    width: 100% !important;
+    height: 100% !important; /* Force to fill fixed-size container */
+    max-height: 180px; /* Limit actual chart size for a 'small' look */
 }
 
 /* stat-content h4 */
