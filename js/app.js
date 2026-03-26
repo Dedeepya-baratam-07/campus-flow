@@ -19,7 +19,7 @@ const App = {
                 this.state.user = user;
                 try {
                     const userDoc = await fb.get(fb.docRef(fb.db, "users", user.uid));
-                    let userData = userDoc.data();
+                    let userData = userDoc.exists() ? userDoc.data() : null;
                     
                     if (!userData) {
                         // Fallback role if doc doesn't exist yet (should be created on signup)
@@ -29,6 +29,9 @@ const App = {
                     this.state.user.role = userData.role;
                     this.state.user.fullName = userData.displayName;
                     
+                    // Synchronize with legacy Store for components that still use it
+                    Store.setCurrentUser(userData.role);
+                    
                     this.showDashboard(this.state.user.role);
                 } catch (err) {
                     console.error("Error fetching user role:", err);
@@ -37,6 +40,7 @@ const App = {
             } else {
                 // User is signed out.
                 this.state.user = null;
+                Store.logout();
                 this.showAuth();
             }
         });
@@ -96,31 +100,23 @@ const App = {
             // Update user profile
             await fb.updateUser(user, { displayName: name });
 
-            // Store role in Firestore
-            await fb.add(fb.col(fb.db, "users"), {
-                uid: user.uid,
-                email: email,
-                displayName: name,
-                role: role,
-                createdAt: fb.ts()
-            });
+            // Store role in Firestore with UID as document ID
+            // Using fb.upd (updateDoc) with merge: true acts as setDoc if document exists, 
+            // but updateDoc fails if it doesn't exist. 
+            // I'll update firebase-init.js to include setDoc.
+            // For now, I'll use add but the user requested better management.
             
             // Link UID as document ID for easier lookup
-            await fb.upd(fb.docRef(fb.db, "users", user.uid), {
+            await fb.set(fb.docRef(fb.db, "users", user.uid), {
                  uid: user.uid,
                  email: email,
                  displayName: name,
                  role: role,
                  createdAt: fb.ts()
-            }, { merge: true });
+            });
             
-            // Wait, fb.upd needs docRef which I just created. 
-            // Better to use setDoc equivalent or just specify ID in add?
-            // Since I exposed 'add' as addDoc, I'll use docRef + setDoc equivalent.
-            // In Firebase V9: setDoc(doc(db, "users", uid), data)
-            // I'll update my init to expose setDoc.
-
             this.showToast("Account created successfully!");
+            // The onAuth listener will handle the redirection
         } catch (err) {
             console.error(err);
             this.showToast("Signup failed: " + err.message, "danger");
