@@ -49,16 +49,43 @@ const App = {
     toggleAuthMode(mode) {
         const loginForm = document.getElementById('login-form');
         const signupForm = document.getElementById('signup-form');
+        const resetForm = document.getElementById('reset-form');
         const subtitle = document.getElementById('auth-subtitle');
 
+        loginForm.classList.add('hidden');
+        signupForm.classList.add('hidden');
+        resetForm.classList.add('hidden');
+
         if (mode === 'signup') {
-            loginForm.classList.add('hidden');
             signupForm.classList.remove('hidden');
             subtitle.innerText = 'Create a new account';
+        } else if (mode === 'reset') {
+            resetForm.classList.remove('hidden');
+            subtitle.innerText = 'Reset your password';
         } else {
-            signupForm.classList.add('hidden');
             loginForm.classList.remove('hidden');
             subtitle.innerText = 'Sign in to your account';
+        }
+    },
+
+    async handleResetPassword(e) {
+        e.preventDefault();
+        const email = document.getElementById('reset-email').value;
+        const btn = document.getElementById('reset-submit-btn');
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending link...';
+
+        try {
+            await fb.resetPass(fb.auth, email);
+            this.showToast("Password reset link sent! Check your inbox.");
+            this.toggleAuthMode('login');
+        } catch (err) {
+            console.error(err);
+            this.showToast("Error: " + err.message, "danger");
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Reset Link';
         }
     },
 

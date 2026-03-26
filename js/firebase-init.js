@@ -7,7 +7,8 @@ import {
     createUserWithEmailAndPassword, 
     signOut, 
     onAuthStateChanged,
-    updateProfile
+    updateProfile,
+    sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { 
     getFirestore, 
@@ -49,6 +50,7 @@ window.fb = {
     signOut: signOut,
     onAuth: onAuthStateChanged,
     updateUser: updateProfile,
+    resetPass: sendPasswordResetEmail,
     // Firestore
     col: collection,
     add: addDoc,
